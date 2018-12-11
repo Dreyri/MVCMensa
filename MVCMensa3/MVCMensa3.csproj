@@ -45,10 +45,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Google.Protobuf, Version=3.5.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Protobuf.3.5.1\lib\net45\Google.Protobuf.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MySql.Data, Version=8.0.13.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.8.0.13\lib\net452\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -127,9 +138,24 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ProduktController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Benutzer.cs" />
+    <Compile Include="Models\Bild.cs" />
+    <Compile Include="Models\Database.cs" />
+    <Compile Include="Models\Detail.cs" />
+    <Compile Include="Models\Gast.cs" />
+    <Compile Include="Models\Kategorie.cs" />
+    <Compile Include="Models\LoginFeedback.cs" />
+    <Compile Include="Models\Mahlzeit.cs" />
+    <Compile Include="Models\MensaSession.cs" />
+    <Compile Include="Models\PasswordStorage.cs" />
+    <Compile Include="Models\Preis.cs" />
+    <Compile Include="Models\Registration.cs" />
+    <Compile Include="Models\Zutat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -137,12 +163,25 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\banner.jpg" />
+    <Content Include="Images\BannerBottom.jpg" />
+    <Content Include="Images\img\produkte\Bratrolle.jpg" />
+    <Content Include="Images\img\produkte\CurryWok.jpg" />
+    <Content Include="Images\img\produkte\CurryWurst.jpg" />
+    <Content Include="Images\img\produkte\Falafel.png" />
+    <Content Include="Images\img\produkte\KaeseBrot.jpg" />
+    <Content Include="Images\img\produkte\KrautSalat.jpg" />
+    <Content Include="Images\img\produkte\Schnitzel.jpg" />
+    <Content Include="Images\img\produkte\Spiegelei.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="App_Code\ProduktHelper.cshtml" />
+    <Content Include="App_Code\LoginHelper.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -168,10 +207,23 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_Head.cshtml" />
+    <Content Include="Views\Shared\_Foot.cshtml" />
+    <Content Include="Views\Produkt\Zutaten.cshtml" />
+    <Content Include="Views\Produkt\Index.cshtml" />
+    <Content Include="Views\Login\Success.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Shared\_Login.cshtml" />
+    <Content Include="Views\Shared\_Status.cshtml" />
+    <Content Include="Views\Produkt\Detail.cshtml" />
+    <Content Include="Views\Login\Register.cshtml" />
+    <Content Include="Views\Shared\_Registration.cshtml" />
+    <Content Include="Views\Login\RegisterGast.cshtml" />
+    <Content Include="Views\Login\RegisterStudent.cshtml" />
+    <Content Include="Views\Login\RegisterMA.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

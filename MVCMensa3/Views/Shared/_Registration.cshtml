@@ -1,0 +1,36 @@
+﻿
+@model MVCMensa3.Models.Registration
+
+    <fieldset class="feld1">
+        <legend>Registrieren</legend>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Nutzername)
+            @Html.EditorFor(m => m.Nutzername, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(m => m.Nutzername, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Passwort)
+            @Html.PasswordFor(m => m.Passwort, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Passwort, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Wiederholung)
+            @Html.PasswordFor(m => m.Wiederholung, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Wiederholung, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Vorname)
+            @Html.EditorFor(m => m.Vorname, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(m => m.Vorname, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-goup">
+            @Html.LabelFor(m => m.Nachname)
+            @Html.EditorFor(m => m.Nachname, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(m => m.Nachname, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-goup">
+            @Html.LabelFor(m => m.Email)
+            @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+        </div>
+    </fieldset>

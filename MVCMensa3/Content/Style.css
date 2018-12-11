@@ -1,0 +1,204 @@
+﻿body, html, .container-fluid {
+    word-wrap: break-word;
+    margin: 20px 40px 0px 20px;
+}
+
+.em-brand {
+    font-size: 50px;
+    background-color: #ffffff;
+    color: #00b5ad;
+}
+
+html body a.em-hl {
+    text-decoration: underline !important;
+    color: #00b5ad;
+}
+
+html body a.em-disabled {
+    text-decoration: none;
+    color: dimgrey;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+#emensa-body .em-no-hl
+{
+    color: black !important;
+    text-decoration: none !important;
+}
+
+html body a.em-hl:hover {
+    text-decoration: none !important;
+    color: inherit;
+}
+
+#emensa-body a.em-disabled {
+    text-decoration: line-through;
+    color: gray;
+}
+
+    #emensa-body a.em-disabled:hover {
+        text-decoration: line-through;
+        color: gray;
+    }
+
+.links {
+    text-decoration: underline;
+    color: #00b5ad
+}
+
+.rechts {
+    position: absolute;
+}
+
+.text_rechts {
+    text-align: right;
+}
+
+legend {
+    margin-bottom: 0px;
+    border-bottom: 0px;
+    width: auto;
+}
+
+.em-separator-right {
+    border-right: 1px solid #000000;
+}
+
+footer.em-separator-top {
+    border-top: 1px solid #000000;
+    margin-top: 10px;
+}
+
+.em-separator-bot {
+    border-bottom: 1px solid #000000;
+    margin-bottom: 10px;
+}
+
+.em-top-buffer {
+    margin-top: 20px;
+}
+
+.em-bot-buffer {
+    margin-bottom: 20px;
+}
+
+.seperator {
+    border-right: 1px solid #000000;
+}
+
+.feld1 {
+    border: solid 1px;
+    width: 105%;
+    padding: 20px;
+}
+
+.titlebar-search {
+    width: 89%;
+    box-sizing: border-box;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.center-block {
+    display: table;
+}
+
+.start_seite {
+    padding-left: 70px;
+    padding-right: 70px;
+}
+
+.em-thumbnail {
+    width: 100%;
+    height: auto;
+}
+
+img.em-thumbnail.em-disabled {
+    widh: 100%;
+    height: auto;
+    opacity: 0.4;
+}
+
+fieldset.em-border {
+    border: solid;
+    color: #0c0c0c;
+    padding: 10px;
+    border-radius: 10px;
+    background: #c0c0c0;
+}
+
+.gpreis {
+    margin-top: 100px;
+}
+/* Style the tab */
+div.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+    /* Style the buttons inside the tab */
+    div.tab button {
+        background-color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+        font-size: 17px;
+    }
+
+        /* Change background color of buttons on hover */
+        div.tab button:hover {
+            background-color: #ddd;
+        }
+
+        /* Create an active/current tablink class */
+        div.tab button.active {
+            background-color: #ccc;
+        }
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+
+#emensa-body a {
+    text-decoration: underline;
+    color: #00b5ad;
+}
+
+
+    #emensa-body a:hover {
+        text-decoration: none;
+        color: #00b5ad;
+    }
+
+#emensa-body td {
+    padding-bottom: 1em;
+    padding-top: 1em;
+    padding-left: 1em;
+}
+
+#emensa-body tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+
+#emensa-body tr > td.em-no-bg {
+    background-color: #ffffff;
+}
+
+
+#emensa-body tr:nth-child(even) {
+    background-color: lightgray;
+}

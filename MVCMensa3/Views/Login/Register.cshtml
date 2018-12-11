@@ -1,0 +1,12 @@
+﻿@model MVCMensa3.Models.Registration
+
+@{
+    ViewBag.Title = "Registrieren";
+}
+
+<p>
+    Als welchen Kontotypen wollen sie sich registrieren?
+</p>
+<a href="@Url.Action("RegisterGast", "Login")" type="button" class="btn btn-default em-no-hl">Gast</a>
+<a href="@Url.Action("RegisterStudent", "Login")" type="button" class="btn btn-default em-no-hl">Student</a>
+<a href="@Url.Action("RegisterMA", "Login")" type="button" class="btn btn-default em-no-hl">Mitarbeiter</a>

@@ -1,0 +1,11 @@
+﻿@model MVCMensa3.Models.MensaSession
+
+<p>
+    Hallo @Model.User, Sie sind angemeldet als <b>@Model.Rolle</b>.
+</p>
+@using (Html.BeginForm("Logout", "Login", FormMethod.Post))
+{
+    <fieldset>
+        <input type="submit" name="logout" value="Abmelden" class="btn btn-default" />
+    </fieldset>
+}

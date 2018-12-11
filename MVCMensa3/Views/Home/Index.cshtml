@@ -1,31 +1,40 @@
-﻿@{
-    ViewBag.Title = "Home Page";
-}
-
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-
+﻿<!-- oberere Textbereich -->
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
+    <div class="col-md-12">
+        <img src="~/Images/banner.jpg" alt="banner">
+    </div>
+</div>
+<!-- Linker Textbereich -->
+<div class="row em-top-buffer em-bot-buffer">
+    <div class="col-md-2">
         <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
+            Der Dienst der e-Mensa ist noch beta. Sie können bereits @Html.ActionLink("Mahlzeiten", "Index", "Produkt", null, new { @class = "em-hl" }) durchstöbern, aber noch nicht bestellen.
         </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    <!-- rechter Textbereich -->
+    <div class="col-md-10">
+        <div class=" row">
+            <div class="col-md-10">
+                <h1>Leckere Gerichte vorbestellen</h1>
+                <p>... und gemeinsam mit Kommiltonen und Freunden essen</p>
+            </div>
+            <div class="col-md-2">
+                <div class="btn-group-lg btn-group-vertical pull-right">
+                    <a href="@Url.Action("Register", "Login")" type="button" class="btn btn-primary em-bot-buffer em-no-hl"><span class="fa fa-hand-point-right"></span> Registrieren</a>
+                    <a href="@Url.Action("Login", "Login")" type="button" class="btn btn-default em-no-hl"><span class="fa fa-sign-in-alt em-no-hl"> </span> Anmelden</a>
+                </div>
+
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        <p>
+            Registrieren Sie sich @Html.ActionLink("hier", "Register", "Login", null, new { @class = "em-hl" }) um über die Veröffentlichung  des Dienstes per Mail informiert werden.
+        </p>
+    </div>
+    <div class="col-md-10">
+        <img src="~/Images/BannerBottom.jpg" alt="banner bottom" />
     </div>
 </div>

@@ -1,0 +1,64 @@
+﻿@model Tuple<List<KeyValuePair<MVCMensa3.Models.Mahlzeit, MVCMensa3.Models.Bild>>, List<MVCMensa3.Models.Kategorie>, MVCMensa3.Models.Kategorie>
+
+<!-- oberere Textbereich -->
+<div class="row align-items-end" style="height:30%;">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-10">
+        <h1>Verfügbare Speisen (@(Model.Item3 == null ? "Alle" : Model.Item3.Bezeichnung))</h1>
+    </div>
+</div>
+<!-- Linker Textbereich -->
+<div class="row">
+    <div class="col-md-2">
+        @using (Html.BeginForm("Index", "Produkt", FormMethod.Get))
+        {
+        <fieldset class="em-border form-group">
+            <legend>
+                Speisenliste filtern
+            </legend>
+            <div class="dropdown">
+                @ProduktHelper.MakeKategorieFilter(Model.Item2, Model.Item3) <!-- ?kategorie=xx -->
+            </div>
+            <div class="form-check">
+                @Html.CheckBox("verfuegbar", false, new { @class = "form-check-input" })
+                <!--<input class="form-check-input" type="checkbox" name="verfuegbar" value="1" form="emensa-filter">-->
+                <label class="form-check-label">nur verfügbare</label>
+            </div>
+            <div class="form-check">
+                @Html.CheckBox("vegetarisch", false, new { @class = "form-check-input" })
+                <!--<input class="form-check-input" type="checkbox" name="vegetarisch" value="1" form="emensa-filter">-->
+                <label class="form-check-label">vegetarisch</label>
+            </div>
+            <div class="form-check">
+                @Html.CheckBox("vegan", false, new { @class = "form-check-input" })
+                <!--<input class="form-check-input" type="checkbox" name="vegan" value="1" form="emensa-filter">-->
+                <label class="form-check-label">vegane</label>
+            </div>
+            <input type="submit" class="btn btn-default" value="Speisen Filtern" />
+        </fieldset>
+        }
+    </div>
+    <!-- rechter Textbereich -->
+
+    <div class="col-md-8">
+        <div class="row row-eq-height">
+            @foreach (var mahlzeitbild in Model.Item1)
+            {
+                <div class="col-md-3">
+                    <div class="img-thumbnail">
+
+                        <img class="em-thumbnail @(mahlzeitbild.Key.Verfuegbar ? "": "em-disabled")" src="@Url.Content(string.Format("~/Images{0}", mahlzeitbild.Value.Binaerdaten))" alt="@mahlzeitbild.Value.AltTitel">
+
+
+                        <div class="caption">
+                            <h4>@mahlzeitbild.Key.Name</h4>
+                            <a class="@(mahlzeitbild.Key.Verfuegbar ? "" : "em-disabled")" href="@Url.Action("Detail", "Produkt", new { id = mahlzeitbild.Key.ID })">Details</a>
+                        </div>
+                    </div>
+                </div>
+                //@ProduktHelper.MakeProduktTile(mahlzeitbild.Key, mahlzeitbild.Value);
+            }
+        </div>
+    </div>
+</div>

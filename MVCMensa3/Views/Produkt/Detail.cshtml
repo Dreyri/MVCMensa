@@ -1,0 +1,103 @@
+﻿@model MVCMensa3.Models.Detail
+@{
+    var mahlzeit = Model.Mahlzeit;
+    var msession = Model.Session;
+    var firstBild = Model.Bild;
+    var curPreis = Model.Preis;
+    var zutaten = Model.Zutaten;
+}
+
+<!-- oberere Textbereich -->
+<div class="row" style="height:30%;">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-8">
+        <h1>Details für "@mahlzeit.Name"</h1>
+    </div>
+    <div class="col-md-2">
+        <p style="padding-top:40px" class="text_rechts">@msession.Rolle-Preis</p>
+    </div>
+
+</div>
+<!-- Linker Textbereich -->
+<div class="row">
+    <div class="col-md-2">
+        @if (msession != null && !string.IsNullOrEmpty(msession.User))
+        {
+            @Html.Partial("~/Views/Shared/_Status.cshtml", msession);
+        }
+        else
+        {
+            @Html.Partial("~/Views/Shared/_Login.cshtml", new MVCMensa3.Models.LoginFeedback(null, null))
+        }
+    </div>
+    <!-- rechter Textbereich -->
+    <div class="col-md-10">
+        <div class="row">
+            <div class="col-md-10">
+                <img src="@Url.Content(string.Format("~/Images{0}", firstBild.Binaerdaten))" alt="@firstBild.AltTitel" />
+            </div>
+            <div class="col-md-2">
+
+
+                <p class="text_rechts">
+                    <h2 class="text_rechts">@curPreis€</h2>
+                    <button type="button" class="btn btn-default titlebar-search"><span class="glyphicon glyphicon-cutlery"></span> Vorbestellen</button>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row em-top-buffer">
+    <div class="col-md-2">
+        <!-- placeholder -->
+    </div>
+    <div class="col-md-8">
+        <ul role="tablist" class="nav nav-tabs">
+            <li class="nav-item"><a class="nav-link active" role="tab" data-toggle="tab" href="#beschreibung">Beschreibung</a></li>
+            <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#zutaten">Zutaten</a></li>
+            <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#bewertungen">Bewertungen</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade show active" id="beschreibung">
+                <p>@mahlzeit.Beschreibung</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="zutaten">
+                @foreach (var zutat in zutaten)
+                {
+                    <p>@zutat.Name</p>
+                }
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="bewertungen">
+                <form action="http://bc5.m2c-lab.fh-aachen.de/form.php" method="post">
+                    <textarea class="form-control" id="bemerkung" name="bemerkung" rows="4" cols="80">Bitte geben Sie hier eine kurze Bewertung der Mahlzeit ein.
+                            </textarea>
+
+
+                    <label for="benutzer">Name: </label>
+                    <input class="form-control" type="text" id="benutzer" name="benutzer">
+
+                    <label for="bewertung">Bewertung: </label>
+                    <input class="form-control" type="number" id="bewertung" name="bewertung" min="1" max="5">
+
+                    <button type="submit" class="btn btn-default">Übermitteln</button>
+
+                    <input type="hidden" name="matrikel" value="3129739">
+                    <input type="hidden" name="kontrolle" value="Eng">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <!-- placeholder -->
+    </div>
+</div>
+
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+
+}

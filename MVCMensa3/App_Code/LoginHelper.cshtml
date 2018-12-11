@@ -1,0 +1,13 @@
+﻿
+@helper MakeLoginSuccess(string user, string role)
+{
+    <p>
+        Hallo @user, Sie sind angemeldet als <b>@role</b>.
+    </p>
+    <form action="~/Views/Login.cshtml" method="post">
+        <fieldset>
+            <input type="submit" name="logout" value="Abmelden" class="btn btn-default" />
+        </fieldset>
+    </form>
+}
+

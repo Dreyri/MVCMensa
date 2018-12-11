@@ -1,0 +1,77 @@
+﻿@using MVCMensa3.Models
+@using System.Web.Mvc
+@using System.Web
+
+@helper MakeTableEntry(MVCMensa3.Models.Zutat zutat)
+{
+    <tr>
+        <td class="em-no-bg">
+            <a href="@String.Format("https://www.google.de/search?q={0}", zutat.Name)">@zutat.Name</a> @if (zutat.Bio)
+            {<i class="fas fa-leaf"></i>}
+        </td>
+        <td><i class="far @(zutat.Vegan ? "fa-check-circle" : "fa-circle")"></i></td>
+        <td><i class="far @(zutat.Vegetarisch ? "fa-check-circle" : "fa-circle")"></i></td>
+        <td><i class="far @(zutat.Glutenfrei ? "fa-check-circle" : "fa-circle")"></i></td>
+    </tr>
+}
+
+@helper MakeProduktTile(Mahlzeit mahlzeit, Bild bild)
+{
+    <div class="col-md-3">
+        <div class="img-thumbnail">
+
+            <img class="em-thumbnail @(mahlzeit.Verfuegbar ? "": "em-disabled")" src="@(string.Format("~/Images{0}", bild.Binaerdaten))" alt="@bild.AltTitel">
+
+
+            <div class="caption">
+                <h4>@mahlzeit.Name</h4>
+                <a class="@(mahlzeit.Verfuegbar ? "" : "em-disabled")" href="@(mahlzeit.Verfuegbar ? string.Format("Detail.cshtml?id={0}", mahlzeit.ID) : "#")">Details</a>
+            </div>
+        </div>
+    </div>
+}
+
+@helper MakeSelectForKategorie(int id, List<Kategorie> kategorien, int selected)
+{
+    List<Kategorie> validSubkat = new List<Kategorie>();
+
+    // generate valid list of categories
+    foreach (Kategorie kat in kategorien)
+    {
+        if (kat.Oberkategorie == id)
+        {
+            validSubkat.Add(kat);
+        }
+    }
+
+    // generate our html
+    foreach (Kategorie subKat in validSubkat)
+    {
+        <option value="@subKat.ID" @(selected == subKat.ID ? "selected" : "")>@subKat.Bezeichnung</option>
+    }
+}
+
+@helper MakeKategorieFilter(List<Kategorie> kategorien, Kategorie selected)
+{
+    var oberKategorien = new List<Kategorie>();
+    foreach (Kategorie kategorie in kategorien)
+    {
+        if (kategorie.Oberkategorie == null)
+        {
+            // generate oberkategorie list
+            oberKategorien.Add(kategorie);
+        }
+    }
+    <select class="form-control form-control-md" name="kategorie">
+        <optgroup label="Generell">
+            <option value="0" @(selected == null ? "selected" : "")>Alle anzeigen</option>
+        </optgroup>
+
+        @foreach (Kategorie oberkat in oberKategorien)
+        {
+            <optgroup label="@oberkat.Bezeichnung">
+                @MakeSelectForKategorie(oberkat.ID, kategorien, selected == null ? 0 : selected.ID);
+            </optgroup>
+        }
+    </select>
+}

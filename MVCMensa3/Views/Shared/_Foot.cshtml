@@ -1,0 +1,17 @@
+﻿<!-- Navigation Bar -->
+<footer class="container em-separator-top">
+    <nav class="navbar navbar-expand-sm row">
+        <div class="col-md-2">
+            <a>(c) 2018 DBWT</a>
+        </div>
+        <div class="col-md-10">
+            <ul class="navbar-nav">
+                <li class="nav-item em-separator-right"><b>@DateTime.Now</b></li>
+                <li class="nav-item em-separator-right">@Html.ActionLink("Login", "Login", "Login", null, new { @class = "em-hl nav-link" })</li>
+                <li class="nav-item em-separator-right">@Html.ActionLink("Registrieren", "Register", "Login", null, new { @class = "em-hl nav-link" })</li>
+                <li class="nav-item em-separator-right">@Html.ActionLink("Zutatenliste", "Zutaten", "Produkt", null, new { @class = "em-hl nav-link" })</li>
+                <li class="nav-item">@Html.ActionLink("Impressum", "Impressum", "Home", null, new { @class = "em-hl nav-link" })</li>
+            </ul>
+        </div>
+    </nav>
+</footer>

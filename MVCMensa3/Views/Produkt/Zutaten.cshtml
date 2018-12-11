@@ -1,0 +1,14 @@
+﻿@model IEnumerable<MVCMensa3.Models.Zutat>
+
+<table style="width: 100%">
+    <tr>
+        <th>Zutat</th>
+        <th>Vegan?</th>
+        <th>Vegetarisch?</th>
+        <th>Glutenfrei?</th>
+    </tr>
+    @foreach (var zutat in Model)
+    {
+        @ProduktHelper.MakeTableEntry(zutat);
+    }
+</table>
