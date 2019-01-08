@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\linq2db.MySql.2.6.2\build\linq2db.MySql.props" Condition="Exists('..\packages\linq2db.MySql.2.6.2\build\linq2db.MySql.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -45,8 +46,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Google.Protobuf, Version=3.5.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Protobuf.3.5.1\lib\net45\Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="linq2db, Version=2.6.2.0, Culture=neutral, PublicKeyToken=e41013125f9e410a, processorArchitecture=MSIL">
+      <HintPath>..\packages\linq2db.2.6.2\lib\net46\linq2db.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MySql.Data, Version=8.0.13.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
@@ -149,6 +159,11 @@
     <Compile Include="Models\Detail.cs" />
     <Compile Include="Models\Gast.cs" />
     <Compile Include="Models\Kategorie.cs" />
+    <Compile Include="Models\Praktikum1.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Praktikum.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\LoginFeedback.cs" />
     <Compile Include="Models\Mahlzeit.cs" />
     <Compile Include="Models\MensaSession.cs" />
@@ -164,6 +179,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Style.css" />
+    <Content Include="LinqToDB.Templates\CopyMe.MySql.tt.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -178,10 +194,27 @@
     <Content Include="Images\img\produkte\KrautSalat.jpg" />
     <Content Include="Images\img\produkte\Schnitzel.jpg" />
     <Content Include="Images\img\produkte\Spiegelei.jpg" />
+    <Content Include="Models\Praktikum.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Praktikum1.generated.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="App_Code\ProduktHelper.cshtml" />
     <Content Include="App_Code\LoginHelper.cshtml" />
+    <Content Include="LinqToDB.Templates\DataAnnotations.ttinclude" />
+    <Content Include="LinqToDB.Templates\DataModel.ttinclude" />
+    <Content Include="LinqToDB.Templates\EditableObject.ttinclude" />
+    <Content Include="LinqToDB.Templates\Humanizer.ttinclude" />
+    <Content Include="LinqToDB.Templates\LinqToDB.MySql.Tools.ttinclude" />
+    <Content Include="LinqToDB.Templates\LinqToDB.MySql.ttinclude" />
+    <Content Include="LinqToDB.Templates\LinqToDB.Tools.ttinclude" />
+    <Content Include="LinqToDB.Templates\LinqToDB.ttinclude" />
+    <Content Include="LinqToDB.Templates\MultipleFiles.ttinclude" />
+    <Content Include="LinqToDB.Templates\NotifyDataErrorInfo.ttinclude" />
+    <Content Include="LinqToDB.Templates\NotifyPropertyChanged.ttinclude" />
+    <Content Include="LinqToDB.Templates\ObsoleteAttributes.ttinclude" />
+    <Content Include="LinqToDB.Templates\PluralizationService.ttinclude" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -221,9 +254,12 @@
     <Content Include="Views\Login\RegisterGast.cshtml" />
     <Content Include="Views\Login\RegisterStudent.cshtml" />
     <Content Include="Views\Login\RegisterMA.cshtml" />
+    <Content Include="LinqToDB.Templates\T4Model.ttinclude" />
+    <Content Include="LinqToDB.Templates\Validation.ttinclude" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\Linq\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -237,6 +273,9 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -271,6 +310,7 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\linq2db.MySql.2.6.2\build\linq2db.MySql.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\linq2db.MySql.2.6.2\build\linq2db.MySql.props'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
