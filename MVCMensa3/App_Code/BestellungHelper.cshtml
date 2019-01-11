@@ -1,20 +1,20 @@
-﻿@helper MakeBestellungRow(int id, String name, decimal preis, int anzahl)
+﻿@helper MakeBestellungRow(int index, MVCMensa3.Models.BestellungViewModel bestellung)
     {
     <tr>
         <td>
-            @id
+            @bestellung.Bestellungen.ElementAt(index).ID
         </td>
         <td>
-            @name
+            @bestellung.Bestellungen.ElementAt(index).Name
         </td>
         <td>
-            @preis €
+            @bestellung.Bestellungen.ElementAt(index).Preis €
         </td>
         <td>
-            @anzahl
+            @bestellung.Bestellungen.ElementAt(index).Anzahl
         </td>
         <td>
-            @(preis * anzahl) €
+            @(bestellung.Bestellungen.ElementAt(index).Preis * bestellung.Bestellungen.ElementAt(index).Anzahl) €
         </td>
     </tr>
     }

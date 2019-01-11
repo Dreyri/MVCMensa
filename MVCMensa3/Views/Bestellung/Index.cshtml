@@ -1,31 +1,60 @@
 ﻿@model MVCMensa3.Models.BestellungViewModel
 @{
     ViewBag.Title = "Bestellungen";
+    decimal preisSum = 0m;
 }
 
+@using (Html.BeginForm("Index", "Bestellung", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+    <table style="width: 100%">
+        <tr>
+            <th>ID</th>
+            <th>Mahlzeit</th>
+            <th>Einzelpreis</th>
+            <th>Anzahl</th>
+            <th>Gesamtpreis</th>
+        </tr>
+        @for (int i = 0; i < Model.Bestellungen.Count(); ++i)
+        {
+            @(preisSum += Model.Bestellungen.ElementAt(i).Preis)
+            <tr>
+                <td>
+                    @Html.ValueFor(m => m.Bestellungen.ElementAt(i).ID)
+                </td>
+                <td>
+                    @Html.ValueFor(m => m.Bestellungen.ElementAt(i).Name)
+                </td>
+                <td>
+                    @Html.ValueFor(m => m.Bestellungen.ElementAt(i).Preis) €
+                </td>
+                <td>
+                    @Html.EditorFor(m => m.Bestellungen.ElementAt(i).Anzahl, new { htmlAttributes = new { type = "number", min = "0", max = "10", @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.Bestellungen.ElementAt(i).Anzahl, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+        }
+        <tr>
+            <td>
+                @Html.ActionLink("Alle loeschen", "Loeschen", "Bestellung", null, null)
+            </td>
+            <td>
+                <button type="submit" class="btn btn-default">Aenderung uebernehmen</button>
+                @Html.ActionLink("Aenderung uebernehmen", "Index", "Bestellung", null, null)
+            </td>
+            <td>
+                Diese Bestellung kostet
+            </td>
+            <td>
+                @preisSum €
+            </td>
+        </tr>
+    </table>
 
-<table style="width: 100%">
-    <tr>
-        <th>ID</th>
-        <th>Mahlzeit</th>
-        <th>Einzelpreis</th>
-        <th>Anzahl</th>
-        <th>Gesamtpreis</th>
-    </tr>
-    @foreach (var bestellung in Model.Bestellungen)
-    {
-        BestellungHelper.MakeBestellungRow(bestellung.ID, bestellung.Name, bestellung.Preis, bestellung.Anzahl);
-    }
-    
-    <tr>
-        <td>
-            @Html.ActionLink("Alle loeschen", "Loeschen", "Bestellung", null, null)
-        </td>
-        <td>
-            @Html.ActionLink("Aenderung uebernehmen", "Index", "Bestellung", null, null)
-        </td>
-        <td>
-            Diese Bestellung kost
-        </td>
-    </tr>
-</table>
+    <p>
+        Wann kommen Sie das Essen abholen?
+        @Html.EditorFor(m => m.AbholZeit)
+        @Html.ValidationMessageFor(m => m.AbholZeit, "", new { @class = "text-danger"})
+    </p>
+
+}

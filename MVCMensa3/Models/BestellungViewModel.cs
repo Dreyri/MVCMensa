@@ -25,13 +25,17 @@ namespace MVCMensa3.Models
             }
         }
 
+        public String Message { get; set; }
         public IEnumerable<BestellungView> Bestellungen { get; set; }
         public DateTime AbholZeit { get; set; }
 
         public BestellungViewModel(IEnumerable<BestellungView> bestellungen, DateTime abholZeit)
         {
+            Message = "";
             Bestellungen = bestellungen;
             AbholZeit = abholZeit;
         }
+
+        //public static BestellungViewModel FromCookie()
     }
 }
