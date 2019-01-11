@@ -1,0 +1,31 @@
+﻿@model MVCMensa3.Models.BestellungViewModel
+@{
+    ViewBag.Title = "Bestellungen";
+}
+
+
+<table style="width: 100%">
+    <tr>
+        <th>ID</th>
+        <th>Mahlzeit</th>
+        <th>Einzelpreis</th>
+        <th>Anzahl</th>
+        <th>Gesamtpreis</th>
+    </tr>
+    @foreach (var bestellung in Model.Bestellungen)
+    {
+        BestellungHelper.MakeBestellungRow(bestellung.ID, bestellung.Name, bestellung.Preis, bestellung.Anzahl);
+    }
+    
+    <tr>
+        <td>
+            @Html.ActionLink("Alle loeschen", "Loeschen", "Bestellung", null, null)
+        </td>
+        <td>
+            @Html.ActionLink("Aenderung uebernehmen", "Index", "Bestellung", null, null)
+        </td>
+        <td>
+            Diese Bestellung kost
+        </td>
+    </tr>
+</table>

@@ -147,6 +147,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BestellungController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ProduktController.cs" />
@@ -158,6 +159,7 @@
     <Compile Include="Models\Database.cs" />
     <Compile Include="Models\Detail.cs" />
     <Compile Include="Models\Gast.cs" />
+    <Compile Include="Models\Head.cs" />
     <Compile Include="Models\Kategorie.cs" />
     <Compile Include="Models\Praktikum1.generated.cs">
       <AutoGen>True</AutoGen>
@@ -215,6 +217,7 @@
     <Content Include="LinqToDB.Templates\NotifyPropertyChanged.ttinclude" />
     <Content Include="LinqToDB.Templates\ObsoleteAttributes.ttinclude" />
     <Content Include="LinqToDB.Templates\PluralizationService.ttinclude" />
+    <Content Include="App_Code\BestellungHelper.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -256,6 +259,7 @@
     <Content Include="Views\Login\RegisterMA.cshtml" />
     <Content Include="LinqToDB.Templates\T4Model.ttinclude" />
     <Content Include="LinqToDB.Templates\Validation.ttinclude" />
+    <Content Include="Views\Bestellung\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

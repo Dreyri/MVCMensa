@@ -1,0 +1,20 @@
+﻿@helper MakeBestellungRow(int id, String name, decimal preis, int anzahl)
+    {
+    <tr>
+        <td>
+            @id
+        </td>
+        <td>
+            @name
+        </td>
+        <td>
+            @preis €
+        </td>
+        <td>
+            @anzahl
+        </td>
+        <td>
+            @(preis * anzahl) €
+        </td>
+    </tr>
+    }

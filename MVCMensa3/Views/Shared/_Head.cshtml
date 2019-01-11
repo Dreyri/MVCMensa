@@ -1,4 +1,7 @@
-﻿<!-- Navigations Bar oben -->
+﻿@{ 
+    int? opt_bestellungen = ViewBag.Bestellungen;
+    int bestellungen = opt_bestellungen.GetValueOrDefault(0);
+}
 <header class="em-separator-bot">
     <nav class="navbar navbar-expand-sm navbar-light bg-light">
         <div class="row col-md-8">
@@ -6,7 +9,7 @@
             <ul class="navbar-nav">
                 <li class="active nav-item em-separator-right"><a class="em-hl nav-link" href="@Url.Action("Index", "Home")">Start<span class="sr-only">(current)</span></a></li>
                 <li class="nav-item em-separator-right">@Html.ActionLink("Mahlzeiten", "Index", "Produkt", null, new { @class = "em-hl nav-link" })</li>
-                <li class="nav-item em-separator-right"><a class="em-hl nav-link" href="#">Bestellung</a></li>
+                <li class="nav-item em-separator-right">@Html.ActionLink(String.Format("Bestellung ({0})", bestellungen), "Index", "Bestellung", null, new { @class = "em-hl nav-link" })</li>
                 <li><a class="em-hl nav-link" href="https://www.fh-aachen.de">FH-Aachen</a></li>
             </ul>
         </div>
