@@ -16,7 +16,7 @@ namespace DataModels
 	/// <summary>
 	/// Database       : emensa
 	/// Data Source    : localhost
-	/// Server Version : 5.5.5-10.3.11-MariaDB
+	/// Server Version : 5.5.5-10.3.10-MariaDB
 	/// </summary>
 	public partial class EmensaDB : LinqToDB.Data.DataConnection
 	{
@@ -144,11 +144,11 @@ namespace DataModels
 	[Table("bestellungen")]
 	public partial class Bestellungen
 	{
-		[Column,        Nullable] public DateTime? AbholZeitpunkt   { get; set; } // datetime
-		[Column,     NotNull    ] public DateTime  BestellZeitpunkt { get; set; } // datetime
-		[PrimaryKey, Identity   ] public uint      Nummer           { get; set; } // int(10) unsigned
-		[Column,        Nullable] public decimal?  Endpreis         { get; set; } // decimal(10,0)
-		[Column,     NotNull    ] public uint      BenutzerID       { get; set; } // int(10) unsigned
+		[Column,     NotNull    ] public DateTime AbholZeitpunkt   { get; set; } // datetime
+		[Column,     NotNull    ] public DateTime BestellZeitpunkt { get; set; } // datetime
+		[PrimaryKey, Identity   ] public uint     Nummer           { get; set; } // int(10) unsigned
+		[Column,        Nullable] public decimal? Endpreis         { get; set; } // decimal(10,0)
+		[Column,     NotNull    ] public uint     BenutzerID       { get; set; } // int(10) unsigned
 
 		#region Associations
 
