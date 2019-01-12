@@ -73,23 +73,27 @@ namespace MVCMensa3.Models
             Rolle = RoleFromString(req.Params[SessionRole]);
         }
 
-        public decimal DeterminePreis(DataModels.Preise preis)
+        public static decimal DeterminePreis(Role rolle, DataModels.Preise preise)
         {
-            var res = preis.Gastpreis;
-            switch(this.Rolle)
+            var res = preise.Gastpreis;
+            switch(rolle)
             {
                 case Role.MITARBEITER:
-                    res = preis.MAPreis.GetValueOrDefault(res);
+                    res = preise.MAPreis.GetValueOrDefault(res);
                     break;
                 case Role.STUDENT:
-                    res = preis.Studentenpreis.GetValueOrDefault(res);
+                    res = preise.Studentenpreis.GetValueOrDefault(res);
                     break;
                 default:
-                    res = preis.Gastpreis;
                     break;
             }
 
             return res;
+        }
+
+        public decimal DeterminePreis(DataModels.Preise preis)
+        {
+            return DeterminePreis(Rolle, preis);
         }
 
         public static MensaSession FromCookie(HttpCookieCollection cookie)

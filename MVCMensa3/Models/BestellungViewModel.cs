@@ -33,8 +33,39 @@ namespace MVCMensa3.Models
         public BestellungViewModel(IEnumerable<BestellungView> bestellungen, DateTime? abholZeit)
         {
             Message = "";
-            Bestellungen = bestellungen;
+            if (bestellungen == null)
+                Bestellungen = new List<BestellungView>();
+            else
+                Bestellungen = bestellungen;
             AbholZeit = abholZeit;
+        }
+
+        public static BestellungViewModel FromDict(MensaSession.Role rolle, Dictionary<int, int> idAnz)
+        {
+            // when the dictionary is null
+            if (idAnz == null)
+            {
+                return new BestellungViewModel(new List<BestellungView>(), null);
+            }
+
+            using (var db = new EmensaDB())
+            {
+                var entries = from mahlzeiten in db.Mahlzeitens
+                              join preise in db.Preises
+                              on mahlzeiten.PreisID equals preise.ID
+                              select new BestellungView(mahlzeiten.ID, mahlzeiten.Name, MensaSession.DeterminePreis(rolle, preise), (int) mahlzeiten.Vorrat);
+
+                var entriesList = entries.ToList();
+
+                // remove entries smaller than 1
+                var filteredEntries = from unfilteredWarenkorb in entriesList
+                                      join dict in idAnz on (int)unfilteredWarenkorb.ID equals dict.Key
+                                      where (dict.Value >= 1)
+                                      select new BestellungView(unfilteredWarenkorb.ID, unfilteredWarenkorb.Name, unfilteredWarenkorb.Preis, dict.Value);
+
+                // no agreed upon abholzeit yet
+                return new BestellungViewModel(filteredEntries.ToList(), null);
+            }
         }
 
         public static BestellungViewModel FromCookie(Dictionary<string, Dictionary<int, int>> cookie = null, String user = null)

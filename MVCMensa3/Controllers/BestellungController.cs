@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,12 +11,27 @@ namespace MVCMensa3.Controllers
     {
         public ActionResult Index()
         {
-            string user = null;
-            if (Session["user"] != null)
+            var session = Models.MensaSession.FromCookie(HttpContext.Request.Cookies);
+            var warenkorbCookie = HttpContext.Request.Cookies.Get("warenkorb");
+            Dictionary<string, Dictionary<int, int>> warenkorbDict = null;
+
+            if (session == null)
             {
-                user = Session["user"].ToString();
+                return RedirectToAction("Login", "Login");
             }
-            var model = Models.BestellungViewModel.FromCookie(null, user);
+
+            Models.BestellungViewModel model = null;
+
+            // now that we know the session and cookie exists continue
+            if (warenkorbCookie != null)
+            {
+                warenkorbDict = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<int, int>>>(warenkorbCookie.Value);
+                model = Models.BestellungViewModel.FromDict(session.Rolle, warenkorbDict[session.User]);
+            }
+            else
+            {
+                model = new Models.BestellungViewModel(null, null);
+            }
 
             return View(model);
         }
@@ -26,6 +42,24 @@ namespace MVCMensa3.Controllers
         {
             return View(model);
             // nothing needs to be commited
+        }
+
+        public ActionResult Leeren()
+        {
+            var session = Models.MensaSession.FromCookie(Request.Cookies);
+            var warenkorbCookie = HttpContext.Request.Cookies.Get("warenkorb");
+
+            if (warenkorbCookie != null && session != null)
+            {
+                Dictionary<string, Dictionary<int, int>> warenkorb = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<int, int>>>(warenkorbCookie.Value);
+                warenkorb.Remove(session.User);
+                warenkorbCookie.Value = JsonConvert.SerializeObject(warenkorb);
+            }
+
+            warenkorbCookie.Expires = DateTime.Now.AddHours(6);
+            HttpContext.Response.Cookies.Set(warenkorbCookie);
+
+            return RedirectToAction("Index");
         }
 
 
