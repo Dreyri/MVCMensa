@@ -6,7 +6,9 @@
 
 @using (Html.BeginForm("Index", "Bestellung", FormMethod.Post))
 {
-    @Html.ValidationSummary(true)
+    <div class="alert alert-error">
+        @Html.ValidationSummary(true, "Fehler: ", new { @class = "text-danger" })
+    </div>
     <table style="width: 100%">
         <tr>
             <th>ID</th>
@@ -17,20 +19,28 @@
         </tr>
         @for (int i = 0; i < Model.Bestellungen.Count(); ++i)
         {
-            @(preisSum += Model.Bestellungen.ElementAt(i).Preis)
+           
+                preisSum += Model.Bestellungen[i].Preis * Model.Bestellungen[i].Anzahl;
+            
             <tr>
                 <td>
-                    @Html.ValueFor(m => m.Bestellungen.ElementAt(i).ID)
+                    @Html.ValueFor(m => m.Bestellungen[i].ID)
+                    @Html.HiddenFor(m => m.Bestellungen[i].ID)
                 </td>
                 <td>
-                    @Html.ValueFor(m => m.Bestellungen.ElementAt(i).Name)
+                    @Html.ValueFor(m => m.Bestellungen[i].Name)
+                    @Html.HiddenFor(m => m.Bestellungen[i].Name)
                 </td>
                 <td>
-                    @Html.ValueFor(m => m.Bestellungen.ElementAt(i).Preis) €
+                    @Html.ValueFor(m => m.Bestellungen[i].Preis) €
+                    @Html.HiddenFor(m => m.Bestellungen[i].Preis)
                 </td>
                 <td>
-                    @Html.EditorFor(m => m.Bestellungen.ElementAt(i).Anzahl, new { htmlAttributes = new { type = "number", min = "0", max = "10", @class = "form-control" } })
-                    @Html.ValidationMessageFor(m => m.Bestellungen.ElementAt(i).Anzahl, "", new { @class = "text-danger" })
+                    @Html.EditorFor(m => m.Bestellungen[i].Anzahl, new { htmlAttributes = new { type = "number", min = "0", max = "10", @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.Bestellungen[i].Anzahl, "", new { @class = "text-danger" })
+                </td>
+                <td>
+                    @(Model.Bestellungen[i].Preis * Model.Bestellungen[i].Anzahl) €
                 </td>
             </tr>
         }
@@ -40,7 +50,6 @@
             </td>
             <td>
                 <button type="submit" class="btn btn-default">Aenderung uebernehmen</button>
-                @Html.ActionLink("Aenderung uebernehmen", "Index", "Bestellung", null, null)
             </td>
             <td>
                 Diese Bestellung kostet

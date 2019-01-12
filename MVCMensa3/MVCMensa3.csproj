@@ -176,6 +176,7 @@
     <Compile Include="Models\PasswordStorage.cs" />
     <Compile Include="Models\Preis.cs" />
     <Compile Include="Models\Registration.cs" />
+    <Compile Include="Models\Warenkorb.cs" />
     <Compile Include="Models\Zutat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
