@@ -8,7 +8,7 @@ using System.Web.Mvc;
 using MVCMensa3.Models.LinqModels;
 
 
-namespace DBWT_Applikation_PR3_MVC.Controllers
+namespace MVCMensa3.Controllers
 {
     public class DispatchController : Controller
     {
