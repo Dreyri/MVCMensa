@@ -105,6 +105,11 @@ namespace MVCMensa3.Models
             return null;
         }
 
+        public static MensaSession FromContext()
+        {
+            return FromCookie(HttpContext.Current.Request.Cookies);
+        }
+
         public static MensaSession Create(HttpCookieCollection cookies, string user, string rolle)
         {
             var userCookie = new HttpCookie(SessionUser, user);

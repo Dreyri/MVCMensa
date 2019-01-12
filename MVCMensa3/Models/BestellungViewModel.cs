@@ -17,6 +17,13 @@ namespace MVCMensa3.Models
             [Range(0, 10)]
             public int Anzahl { get; set; }
 
+            public BestellungView()
+            {
+                ID = 0;
+                Name = "Unbekannt";
+                Anzahl = 0;
+            }
+
             public BestellungView(uint id, string name, decimal preis, int anz)
             {
                 ID = id;
@@ -27,10 +34,14 @@ namespace MVCMensa3.Models
         }
 
         public string Message { get; set; }
-        public IEnumerable<BestellungView> Bestellungen { get; set; }
+        public List<BestellungView> Bestellungen { get; set; }
         public DateTime? AbholZeit { get; set; }
 
-        public BestellungViewModel(IEnumerable<BestellungView> bestellungen, DateTime? abholZeit)
+        public BestellungViewModel()
+            : this(null, null)
+        { }
+
+        public BestellungViewModel(List<BestellungView> bestellungen = null, DateTime? abholZeit = null)
         {
             Message = "";
             if (bestellungen == null)
@@ -68,11 +79,21 @@ namespace MVCMensa3.Models
             }
         }
 
-        public static BestellungViewModel FromCookie(Dictionary<string, Dictionary<int, int>> cookie = null, String user = null)
+        public static BestellungViewModel FromWarenkorb(MensaSession session, Warenkorb korb)
+        {
+            if (session == null || korb == null || !korb.Dict.ContainsKey(session.User))
+            {
+                return new BestellungViewModel();
+            }
+
+            return FromDict(session.Rolle, korb.Dict[session.User]);
+        }
+
+        public static BestellungViewModel FromCookie(Dictionary<string, Dictionary<int, int>> cookie = null, string user = null)
         {
             Dictionary<int, int> warenkorb = null;
             Dictionary<string, Dictionary<int, int>> currCookie = null;
-            Models.MensaSession session = MensaSession.FromCookie(HttpContext.Current.Request.Cookies);
+            MensaSession session = MensaSession.FromCookie(HttpContext.Current.Request.Cookies);
 
             if(cookie != null)
             {
@@ -100,29 +121,7 @@ namespace MVCMensa3.Models
                 }
             }
 
-            if(warenkorb != null)
-            {
-                using (var db = new EmensaDB())
-                {
-                    var entries = from mahlzeiten in db.Mahlzeitens
-                                  join preise in db.Preises
-                                  on mahlzeiten.PreisID equals preise.ID
-                                  select new BestellungView(mahlzeiten.ID, mahlzeiten.Name, session.DeterminePreis(preise), 0);
-
-                    var entriesList = entries.ToList();
-
-                    var filteredList = from unfilteredWarenkorb in entriesList
-                                       join dict in warenkorb on (int)unfilteredWarenkorb.ID equals dict.Key
-                                       where (dict.Value >= 1)
-                                       select new BestellungView(unfilteredWarenkorb.ID, unfilteredWarenkorb.Name, unfilteredWarenkorb.Preis, dict.Value);
-
-                    entriesList = filteredList.ToList();
-
-                    return new BestellungViewModel(entriesList, null);
-                }
-            }
-
-            return null;
+            return FromDict(session.Rolle, warenkorb);
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
@@ -135,7 +134,7 @@ namespace MVCMensa3.Models
                               where bestellung.Anzahl > mahlzeit.Vorrat
                               select new ValidationResult(string.Format("Nur noch {0} {1} vorhanden.", mahlzeit.Vorrat, bestellung.Name));
 
-                return entries;
+                return entries.ToList();
             }
         }   
     }

@@ -11,27 +11,17 @@ namespace MVCMensa3.Controllers
     {
         public ActionResult Index()
         {
-            var session = Models.MensaSession.FromCookie(HttpContext.Request.Cookies);
-            var warenkorbCookie = HttpContext.Request.Cookies.Get("warenkorb");
-            Dictionary<string, Dictionary<int, int>> warenkorbDict = null;
+            Models.Warenkorb.DoViewBag(ViewBag);
+
+            var session = Models.MensaSession.FromContext();
+            var warenkorb = Models.Warenkorb.FromContext();
 
             if (session == null)
             {
                 return RedirectToAction("Login", "Login");
             }
 
-            Models.BestellungViewModel model = null;
-
-            // now that we know the session and cookie exists continue
-            if (warenkorbCookie != null)
-            {
-                warenkorbDict = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<int, int>>>(warenkorbCookie.Value);
-                model = Models.BestellungViewModel.FromDict(session.Rolle, warenkorbDict[session.User]);
-            }
-            else
-            {
-                model = new Models.BestellungViewModel(null, null);
-            }
+            var model = Models.BestellungViewModel.FromWarenkorb(session, warenkorb);
 
             return View(model);
         }
@@ -40,11 +30,41 @@ namespace MVCMensa3.Controllers
         [HttpPost]
         public ActionResult Index(Models.BestellungViewModel model)
         {
+            if (ModelState.IsValid)
+            {
+                var korb = Models.Warenkorb.FromContext();
+                korb.MergeViewModel(Models.MensaSession.FromContext(), model);
+                korb.Commit();
+            }
             return View(model);
             // nothing needs to be commited
         }
 
-        public ActionResult Leeren()
+        public ActionResult Bestel(int? mahlzeitId)
+        {
+            var session = Models.MensaSession.FromContext();
+
+            // fail conditions
+            if (session == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+            if (!mahlzeitId.HasValue)
+            {
+                return RedirectToAction("Index", "Produkt");
+            }
+
+            var warenkorb = Models.Warenkorb.FromContext();
+
+            // add the mahlzeit to the bestellungscookie
+            warenkorb.AddMahlzeit(mahlzeitId.Value, session.User);
+            warenkorb.Commit();
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Loeschen()
         {
             var session = Models.MensaSession.FromCookie(Request.Cookies);
             var warenkorbCookie = HttpContext.Request.Cookies.Get("warenkorb");
