@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using LinqToDB;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,77 @@ namespace MVCMensa3.Controllers
             }
             return View(model);
             // nothing needs to be commited
+        }
+
+        [HttpPost]
+        public ActionResult Complete(Models.BestellungViewModel model)
+        {
+            // if the state is valid we can submit to the database
+            if (ModelState.IsValid)
+            {
+                Models.MensaSession session = Models.MensaSession.FromContext();
+                var korb = Models.Warenkorb.FromContext();
+                korb.MergeViewModel(Models.MensaSession.FromContext(), model);
+                korb.Commit();
+
+                // do our db transaction
+                using (var db = new DataModels.EmensaDB())
+                {
+                    var nutzer = (from benutzer in db.Benutzers
+                                  where benutzer.Nutzername == session.User
+                                  select new
+                                  {
+                                      benutzer.Nutzername,
+                                      ID = benutzer.Nummer
+                                  }).First();
+
+                    DataModels.Bestellungen bestellung = new DataModels.Bestellungen
+                    {
+                        AbholZeitpunkt = DateTime.Now.AddMinutes(30),
+                        BenutzerID = nutzer.ID,
+                        Endpreis = model.TotalPreis(),
+                        BestellZeitpunkt = DateTime.Now
+                    };
+
+                    try
+                    {
+                        var transaction = db.BeginTransaction();
+
+
+                        bestellung.Nummer = (uint) db.InsertWithInt32Identity(bestellung);
+
+                        foreach (var entry in model.Bestellungen)
+                        {
+                            DataModels.Mahlzeitenbestellungen mzBest = new DataModels.Mahlzeitenbestellungen
+                            {
+                                Anzahl = (uint)entry.Anzahl,
+                                BestellungID = bestellung.Nummer,
+                                MahlzeitID = entry.ID,
+                            };
+
+                            db.Insert(mzBest);
+                        }
+
+                        transaction.Commit();
+
+                        // remove the order on success
+                        korb.Dict.Remove(session.User);
+                        korb.Commit();
+                    }
+                    catch (Exception e)
+                    {
+                        string message = string.Format("Fehler bei der Bestellung: {0}", e.Message);
+                        return PartialView("ErrorBestellung", message);
+                    }
+
+                    return View();
+                }
+            }
+            else
+            {
+                // back to action if the model is invalid
+                return RedirectToAction("Index");
+            }
         }
 
         public ActionResult Bestel(int? mahlzeitId)

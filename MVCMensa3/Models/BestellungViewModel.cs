@@ -124,6 +124,18 @@ namespace MVCMensa3.Models
             return FromDict(session.Rolle, warenkorb);
         }
 
+        public decimal TotalPreis()
+        {
+            decimal preis = 0m;
+
+            foreach(var bestellung in Bestellungen)
+            {
+                preis += (bestellung.Preis * bestellung.Anzahl);
+            }
+
+            return preis;
+        }
+
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             using (var db = new EmensaDB())
@@ -137,5 +149,25 @@ namespace MVCMensa3.Models
                 return entries.ToList();
             }
         }   
+
+        public static List<string> GenerateTimes()
+        {
+            //do roundup
+            DateTime inHalfHour = DateTime.Now.AddMinutes(30);
+            TimeSpan intervals = TimeSpan.FromMinutes(15);
+            var modTicks = inHalfHour.Ticks % intervals.Ticks;
+            var delta = modTicks != 0 ? intervals.Ticks - modTicks : 0;
+            DateTime time = new DateTime(inHalfHour.Ticks + delta, inHalfHour.Kind);
+
+            var timeList = new List<string>();
+
+            for(int i = 0; i < 12; ++i)
+            {
+                timeList.Add(time.ToString("t"));
+                time = time.AddMinutes(15);
+            }
+
+            return timeList;
+        }
     }
 }

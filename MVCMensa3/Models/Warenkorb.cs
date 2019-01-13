@@ -102,12 +102,17 @@ namespace MVCMensa3.Models
             }
         }
 
-        public void Commit()
+        public HttpCookie ToCookie()
         {
-            var korbCookie = new HttpCookie("warenkorb")
+            return new HttpCookie("warenkorb")
             {
                 Value = JsonConvert.SerializeObject(Dict)
             };
+        }
+
+        public void Commit()
+        {
+            var korbCookie = ToCookie();
             korbCookie.Expires = DateTime.Now.AddHours(6);
             HttpContext.Current.Response.Cookies.Set(korbCookie);
         }

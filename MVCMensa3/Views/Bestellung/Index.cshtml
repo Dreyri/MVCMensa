@@ -8,6 +8,7 @@
 {
     <div class="alert alert-error">
         @Html.ValidationSummary(true, "Fehler: ", new { @class = "text-danger" })
+        @Model.Message
     </div>
     <table style="width: 100%">
         <tr>
@@ -60,10 +61,14 @@
         </tr>
     </table>
 
-    <p>
-        Wann kommen Sie das Essen abholen?
-        @Html.EditorFor(m => m.AbholZeit)
-        @Html.ValidationMessageFor(m => m.AbholZeit, "", new { @class = "text-danger"})
-    </p>
+    <div class="row">
+        <p>
+            Wann kommen Sie das Essen abholen?
+            @Html.EditorFor(m => m.AbholZeit)
+            @Html.ValidationMessageFor(m => m.AbholZeit, "", new { @class = "text-danger"})
+        </p>
+
+        <button type="submit" formaction="@Url.Action("Complete", "Bestellung")" class="btn btn-default btn-lg">Kostenpflichtig vorbestellen</button>
+    </div>
 
 }
