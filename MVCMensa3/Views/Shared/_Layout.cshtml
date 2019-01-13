@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="~/Content/Style.css" />
 </head>
 <body>
-    @Html.Partial("_Head")
+    @Html.Partial("_Head", Tuple.Create(MVCMensa3.Models.MensaSession.FromContext(), MVCMensa3.Models.Warenkorb.FromContext()))
 
     <div id="emensa-body" class="container">
         @RenderBody()

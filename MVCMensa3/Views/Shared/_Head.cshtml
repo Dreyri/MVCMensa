@@ -1,6 +1,15 @@
-﻿@{ 
-    int? opt_bestellungen = ViewBag.Bestellungen;
-    int bestellungen = opt_bestellungen.GetValueOrDefault(0);
+﻿@model Tuple<MVCMensa3.Models.MensaSession, MVCMensa3.Models.Warenkorb>
+
+@{ 
+    var bestellungen = 0;
+    var user = Model.Item1.User;
+    if (Model.Item2.Dict.ContainsKey(user))
+    {
+        foreach(var bestellung in Model.Item2.Dict[user])
+        {
+            bestellungen += bestellung.Value;
+        }
+    }
 }
 <header class="em-separator-bot">
     <nav class="navbar navbar-expand-sm navbar-light bg-light">
