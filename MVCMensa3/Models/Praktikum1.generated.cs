@@ -16,7 +16,7 @@ namespace DataModels
 	/// <summary>
 	/// Database       : emensa
 	/// Data Source    : localhost
-	/// Server Version : 5.5.5-10.3.10-MariaDB
+	/// Server Version : 5.5.5-10.3.11-MariaDB
 	/// </summary>
 	public partial class EmensaDB : LinqToDB.Data.DataConnection
 	{
