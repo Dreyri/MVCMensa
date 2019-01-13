@@ -393,9 +393,4 @@ CREATE TRIGGER OnOrderDo
 		UPDATE mahlzeiten
 		SET Vorrat = Vorrat - NEW.Anzahl
 		WHERE ID = NEW.MahlzeitID;
-		
-		UPDATE mahlzeiten
-		SET Verfuegbar = 0
-		WHERE ID = NEW.MahlzeitID AND Vorrat = 0;
-		
 	END//
