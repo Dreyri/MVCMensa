@@ -148,6 +148,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BestellungController.cs" />
+    <Compile Include="Controllers\DispatchController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ProduktController.cs" />
@@ -162,6 +163,8 @@
     <Compile Include="Models\Gast.cs" />
     <Compile Include="Models\Head.cs" />
     <Compile Include="Models\Kategorie.cs" />
+    <Compile Include="Models\LinqModels\BestellungModel.cs" />
+    <Compile Include="Models\LinqModels\CustomBestellungMahlzeiten.cs" />
     <Compile Include="Models\Praktikum1.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
