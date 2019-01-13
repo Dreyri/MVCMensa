@@ -2,13 +2,27 @@
 @{
     ViewBag.Title = "Bestellungen";
     decimal preisSum = 0m;
+    var zeitList = MVCMensa3.Models.BestellungViewModel.GenerateTimes();
 }
 
-@using (Html.BeginForm("Index", "Bestellung", FormMethod.Post))
+@if (Model.Bestellungen.Count == 0)
 {
+    <div class="alert alert-info">
+        <p>
+            Sie haben nichts in ihren Warenkorb.
+            Klicken sie @Html.ActionLink("hier", "Index", "Produkt") um Produkte zu bestellen.
+        </p>
+    </div>
+}
+else
+{
+    using (Html.BeginForm("Index", "Bestellung", FormMethod.Post))
+    {
     <div class="alert alert-error">
-        @Html.ValidationSummary(true, "Fehler: ", new { @class = "text-danger" })
-        @Model.Message
+        <p>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Model.Message
+        </p>
     </div>
     <table style="width: 100%">
         <tr>
@@ -20,9 +34,9 @@
         </tr>
         @for (int i = 0; i < Model.Bestellungen.Count(); ++i)
         {
-           
-                preisSum += Model.Bestellungen[i].Preis * Model.Bestellungen[i].Anzahl;
-            
+
+            preisSum += Model.Bestellungen[i].Preis * Model.Bestellungen[i].Anzahl;
+
             <tr>
                 <td>
                     @Html.ValueFor(m => m.Bestellungen[i].ID)
@@ -52,7 +66,7 @@
             <td>
                 <button type="submit" class="btn btn-default">Aenderung uebernehmen</button>
             </td>
-            <td>
+            <td colspan="2">
                 Diese Bestellung kostet
             </td>
             <td>
@@ -61,14 +75,22 @@
         </tr>
     </table>
 
-    <div class="row">
-        <p>
-            Wann kommen Sie das Essen abholen?
-            @Html.EditorFor(m => m.AbholZeit)
-            @Html.ValidationMessageFor(m => m.AbholZeit, "", new { @class = "text-danger"})
-        </p>
-
-        <button type="submit" formaction="@Url.Action("Complete", "Bestellung")" class="btn btn-default btn-lg">Kostenpflichtig vorbestellen</button>
+    <div class="row mx-auto mt-4">
+        <div class="col-md-9">
+            <p>
+                <div class="col-md-6">
+                    Wann kommen Sie das Essen abholen?
+                </div>
+                <div class="col-md-6">
+                    @Html.DropDownListFor(m => m.AbholZeit, MVCMensa3.Models.BestellungViewModel.GenerateTimes().Select(x => new SelectListItem { Text = x, Value = x }), new { @class = "form form-control" })
+                    @Html.ValidationMessageFor(m => m.AbholZeit, "", new { @class = "text-danger" })
+                </div>
+            </p>
+        </div>
+        <div class="col-md-3">
+            <button type="submit" formaction="@Url.Action("Complete", "Bestellung")" class="btn btn-primary btn-lg">Kostenpflichtig vorbestellen</button>
+        </div>
     </div>
 
+    }
 }

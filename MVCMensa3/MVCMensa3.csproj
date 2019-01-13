@@ -159,6 +159,7 @@
     <Compile Include="Models\BestellungViewModel.cs" />
     <Compile Include="Models\Bild.cs" />
     <Compile Include="Models\Database.cs" />
+    <Compile Include="Models\DateValidation.cs" />
     <Compile Include="Models\Detail.cs" />
     <Compile Include="Models\Gast.cs" />
     <Compile Include="Models\Head.cs" />
@@ -265,6 +266,7 @@
     <Content Include="LinqToDB.Templates\T4Model.ttinclude" />
     <Content Include="LinqToDB.Templates\Validation.ttinclude" />
     <Content Include="Views\Bestellung\Index.cshtml" />
+    <Content Include="Views\Bestellung\Complete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

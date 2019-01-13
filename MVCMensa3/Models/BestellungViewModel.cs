@@ -35,13 +35,15 @@ namespace MVCMensa3.Models
 
         public string Message { get; set; }
         public List<BestellungView> Bestellungen { get; set; }
-        public DateTime? AbholZeit { get; set; }
+        
+        [DateValidation(Format = "t", ErrorMessage = "Keine gultige Abholzeit")]
+        public string AbholZeit { get; set; }
 
         public BestellungViewModel()
             : this(null, null)
         { }
 
-        public BestellungViewModel(List<BestellungView> bestellungen = null, DateTime? abholZeit = null)
+        public BestellungViewModel(List<BestellungView> bestellungen = null, string abholZeit = null)
         {
             Message = "";
             if (bestellungen == null)

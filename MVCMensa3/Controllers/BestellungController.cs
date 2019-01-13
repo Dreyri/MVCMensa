@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -65,7 +66,7 @@ namespace MVCMensa3.Controllers
 
                     DataModels.Bestellungen bestellung = new DataModels.Bestellungen
                     {
-                        AbholZeitpunkt = DateTime.Now.AddMinutes(30),
+                        AbholZeitpunkt = DateTime.ParseExact(model.AbholZeit, "t", CultureInfo.CurrentCulture),
                         BenutzerID = nutzer.ID,
                         Endpreis = model.TotalPreis(),
                         BestellZeitpunkt = DateTime.Now
