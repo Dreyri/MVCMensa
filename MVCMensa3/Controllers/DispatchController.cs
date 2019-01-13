@@ -6,7 +6,7 @@ using System.Web;
 using LinqToDB;
 using System.Web.Mvc;
 using MVCMensa3.Models.LinqModels;
-
+using System.Net;
 
 namespace MVCMensa3.Controllers
 {
@@ -15,6 +15,21 @@ namespace MVCMensa3.Controllers
         // GET: Dispatch
         public JsonResult Bestellungen()
         {
+            string token = "";
+            var tokens = Request.Headers.GetValues("X-Authorize");
+
+            if (tokens != null)
+            {
+                token = tokens[0];
+            }
+
+            if (token != "besttoken")
+            {
+                Response.StatusCode = (int) HttpStatusCode.Unauthorized;
+                Response.SuppressFormsAuthenticationRedirect = true;
+                return Json(new { error = "Unauthorized" }, JsonRequestBehavior.AllowGet);
+            }
+
             using (var db = new EmensaDB())
             {
                 var bestellungen_qry = from user in db.Benutzers
