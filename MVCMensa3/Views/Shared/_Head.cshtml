@@ -2,12 +2,19 @@
 
 @{ 
     var bestellungen = 0;
-    var user = Model.Item1.User;
-    if (Model.Item2.Dict.ContainsKey(user))
+    if (Model.Item1 == null)
     {
-        foreach(var bestellung in Model.Item2.Dict[user])
+        bestellungen = 0;
+    }
+    else
+    {
+        var user = Model.Item1.User;
+        if (Model.Item2.Dict.ContainsKey(user))
         {
-            bestellungen += bestellung.Value;
+            foreach (var bestellung in Model.Item2.Dict[user])
+            {
+                bestellungen += bestellung.Value;
+            }
         }
     }
 }
